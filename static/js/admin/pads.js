@@ -45,7 +45,7 @@ exports.documentReady=function(hooks, context, cb){
     if(longtime!=null && isInt(longtime)){
         var date=new Date(longtime);
         var month=date.getMonth()+1;
-        formattedDate=date.getFullYear()+'-'+fillZeros(month)+'-'+fillZeros(date.getDay())+' '+fillZeros(date.getHours())+':'+fillZeros(date.getMinutes())+':'+fillZeros(date.getSeconds());
+        formattedDate=date.getFullYear()+'-'+fillZeros(month)+'-'+fillZeros(date.getDate())+' '+fillZeros(date.getHours())+':'+fillZeros(date.getMinutes())+':'+fillZeros(date.getSeconds());
     }
     return formattedDate;
   };
@@ -139,6 +139,11 @@ exports.documentReady=function(hooks, context, cb){
 
     widget.find(".results *").remove();
     var resultList=widget.find('.results');
+
+    data.results.sort(function(a, b){
+       var dateA=a.lastEdited, dateB=b.lastEdited
+       return dateB-dateA //sort by date descending
+    })
     
     data.results.forEach(function(resultset) {
       var padName=resultset.padName;
